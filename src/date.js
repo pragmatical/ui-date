@@ -81,41 +81,19 @@ angular.module('ui.date', [])
 
 .constant('uiDateFormatConfig', '')
 
-.directive('uiDateFormat', ['uiDateFormatConfig', function(uiDateFormatConfig) {
-  var directive = {
-    require:'ngModel',
-    link: function(scope, element, attrs, modelCtrl) {
-      var dateFormat = attrs.uiDateFormat || uiDateFormatConfig;
-      if ( dateFormat ) {
-        // Use the datepicker with the attribute value as the dateFormat string to convert to and from a string
-        modelCtrl.$formatters.push(function(value) {
-          if (value) {
-            return jQuery.datepicker.parseDate(dateFormat, value);
-          }
-          return null;
-        });
-        modelCtrl.$parsers.push(function(value){
-          if (value) {
-            return jQuery.datepicker.formatDate(dateFormat, value);
-          }
-          return null;
-        });
-      } else {
-        // Default to ISO formatting
-        modelCtrl.$formatters.push(function(value) {
-          if (angular.isString(value) ) {
-            return new Date(value);
-          }
-          return null;
-        });
-        modelCtrl.$parsers.push(function(value){
-          if (value) {
-            return value.toISOString();
-          }
-          return null;
-        });
-      }
-    }
-  };
-  return directive;
+.directive('uiDateFormat', ['uiDateFormatConfig', function (uiDateFormatConfig) {
+    var directive = {
+        require: 'ngModel',
+        link: function (scope, element, attrs, modelCtrl) {
+            var dateFormatConfig = attrs.uiDateFormat || uiDateFormatConfig;
+            var dateFormat = dateFormatConfig !== null ? dateFormatConfig : $.datepicker.W3C;
+            modelCtrl.$formatters.push(function (value) {
+                return jQuery.datepicker.parseDate(dateFormat, value);
+            });
+            modelCtrl.$parsers.push(function (value) {
+                return jQuery.datepicker.formatDate(dateFormat, value);
+            });
+        }
+    };
+    return directive;
 }]);

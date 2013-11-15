@@ -97,6 +97,7 @@ angular.module('ui.date', [])
                 return jQuery.datepicker.formatDate(dateFormat, value);
               }
             });
+            return null;
         }
     };
     return directive;

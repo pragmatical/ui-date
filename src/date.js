@@ -78,7 +78,7 @@ angular.module('ui.date', [])
   };
 }
 ])
-
+ 
 .constant('uiDateFormatConfig', '')
 
 .directive('uiDateFormat', ['uiDateFormatConfig', function (uiDateFormatConfig) {

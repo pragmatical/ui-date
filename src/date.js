@@ -85,19 +85,19 @@ angular.module('ui.date', [])
     var directive = {
         require: 'ngModel',
         link: function (scope, element, attrs, modelCtrl) {
-            var dateFormatConfig = attrs.uiDateFormat || uiDateFormatConfig;
-            var dateFormat = dateFormatConfig !== null ? dateFormatConfig : $.datepicker.W3C;
+            var dateFormat = attrs.uiDateFormat || uiDateFormatConfig;
             modelCtrl.$formatters.push(function (value) {
-              if(value){
-                return jQuery.datepicker.parseDate(dateFormat, value);
+              if (value){
+                return dateFormat?jQuery.datepicker.parseDate(dateFormat, value):new Date(value);
               }
+              return null;
             });
             modelCtrl.$parsers.push(function (value) {
-              if(value){
-                return jQuery.datepicker.formatDate(dateFormat, value);
-              }
+              if (value){
+                return dateFormat?jQuery.datepicker.formatDate(dateFormat, value):value.toISOString();
+              } 
+              return null;
             });
-            return null;
         }
     };
     return directive;

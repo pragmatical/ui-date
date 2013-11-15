@@ -290,6 +290,20 @@ describe('uiDateFormat', function() {
         expect(element.controller('ngModel').$viewValue).toEqual(aDate);
       });
     });
+    it('should parse the date correctly from a unix timestamp number', function() {
+      inject(function($compile, $rootScope) {
+        var aDate = new Date(2012, 9, 11);
+        var aDateNumber = 1349931600000;
+        var element = $compile('<input ui-date-format="@" ng-model="x"/>')($rootScope);
+        $rootScope.x = aDateNumber;
+        $rootScope.$digest();
+
+        // Check that the model has not been altered
+        expect($rootScope.x).toEqual(aDateNumber);
+        // Check that the viewValue has been parsed correctly
+        expect(element.controller('ngModel').$viewValue).toEqual(aDate);
+      });
+    });
     it('should handle unusual model values', function() {
       inject(function($compile, $rootScope) {
         var element = $compile('<input ui-date-format ng-model="x"/>')($rootScope);
@@ -351,6 +365,21 @@ describe('uiDateFormat', function() {
         var format = 'DD, d MM, yy';
         var aDate = new Date(2012,9,11);
         var aDateString = "Thursday, 11 October, 2012";
+        var element = $compile('<input ui-date-format="' + format + '" ng-model="x"/>')($rootScope);
+        $rootScope.$digest();
+
+        element.controller('ngModel').$setViewValue(aDate);
+        // Check that the model is updated correctly
+        expect($rootScope.x).toEqual(aDateString);
+        // Check that the $viewValue has not been altered
+        expect(element.controller('ngModel').$viewValue).toEqual(aDate);
+      });
+    });
+    it('should format a selected date correctly to a unix timestamp', function() {
+      inject(function($compile, $rootScope) {
+        var format = '@';
+        var aDate = new Date(2012,9,11);
+        var aDateString = "1349931600000";
         var element = $compile('<input ui-date-format="' + format + '" ng-model="x"/>')($rootScope);
         $rootScope.$digest();
 

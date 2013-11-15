@@ -88,9 +88,11 @@ angular.module('ui.date', [])
             var dateFormatConfig = attrs.uiDateFormat || uiDateFormatConfig;
             var dateFormat = dateFormatConfig !== null ? dateFormatConfig : $.datepicker.W3C;
             modelCtrl.$formatters.push(function (value) {
+              if(value)
                 return jQuery.datepicker.parseDate(dateFormat, value);
             });
             modelCtrl.$parsers.push(function (value) {
+              if(value)
                 return jQuery.datepicker.formatDate(dateFormat, value);
             });
         }

@@ -297,12 +297,14 @@ describe('uiDateFormat', function() {
         var element = $compile('<input ui-date-format="@" ng-model="x"/>')($rootScope);
         $rootScope.x = aDateNumber;
         $rootScope.$digest();
+        console.log("Unix Date: " + aDateNumber);
+        console.log("Date: " + aDate);
         // Check that the model has not been altered
         expect($rootScope.x).toEqual(aDateNumber);
         // Check that aDateNumber is a number
         expect(angular.isNumber(aDateNumber)).toEqual(true);
         // Check that the viewValue has been parsed correctly
-        expect(element.controller('ngModel').$viewValue.toISOString()).toEqual(aDate.toISOString());
+        expect(element.controller('ngModel').$viewValue).toEqual(aDate);
       });
     });
     it('should handle unusual model values', function() {

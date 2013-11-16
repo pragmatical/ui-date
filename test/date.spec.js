@@ -292,14 +292,15 @@ describe('uiDateFormat', function() {
     });
     it('should parse the date correctly from a unix timestamp number', function() {
       inject(function($compile, $rootScope) {
-        var aDate = new Date(2012,9,10);
-        var aDateNumber = 1349913600000;
+        var aDate = new Date(2012,9,11);
+        var aDateNumber = aDate.getTime();
         var element = $compile('<input ui-date-format="@" ng-model="x"/>')($rootScope);
         $rootScope.x = aDateNumber;
         $rootScope.$digest();
-
         // Check that the model has not been altered
-        //expect($rootScope.x).toEqual(aDateNumber);
+        expect($rootScope.x).toEqual(aDateNumber);
+        // Check that aDateNumber is a number
+        expect(angular.isNumber(aDateNumber)).toEqual(true);
         // Check that the viewValue has been parsed correctly
         expect(element.controller('ngModel').$viewValue.toISOString()).toEqual(aDate.toISOString());
       });

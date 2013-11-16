@@ -292,8 +292,8 @@ describe('uiDateFormat', function() {
     });
     it('should parse the date correctly from a unix timestamp number', function() {
       inject(function($compile, $rootScope) {
-        var aDate = new Date(2012, 9, 11);
-        var aDateNumber = 1349931600000;
+        var aDate = new Date(2012, 9, 10);
+        var aDateNumber = 1349913600000;
         var element = $compile('<input ui-date-format="@" ng-model="x"/>')($rootScope);
         $rootScope.x = aDateNumber;
         $rootScope.$digest();
@@ -378,8 +378,8 @@ describe('uiDateFormat', function() {
     it('should format a selected date correctly to a unix timestamp', function() {
       inject(function($compile, $rootScope) {
         var format = '@';
-        var aDate = new Date(2012,9,11);
-        var aDateString = "1349931600000";
+        var aDate = new Date("2012-10-11T00:00:00Z");
+        var aDateString = "1349913600000";
         var element = $compile('<input ui-date-format="' + format + '" ng-model="x"/>')($rootScope);
         $rootScope.$digest();
 
